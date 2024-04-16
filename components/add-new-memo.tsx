@@ -9,7 +9,6 @@ import {
 	DialogClose,
 	DialogContent,
 	DialogDescription,
-	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
@@ -64,9 +63,11 @@ export default function AddNewMemo() {
 		<>
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogTrigger asChild>
-					<Button variant="outline">Add Memo</Button>
+					<Button variant="outline" className="text-primary">
+						Add Memo
+					</Button>
 				</DialogTrigger>
-				<DialogContent className="sm:max-w-md">
+				<DialogContent className="rounded-lg max-w-[95%] sm:max-w-md">
 					<DialogHeader>
 						<DialogTitle>Add New Memo</DialogTitle>
 						<DialogDescription>Fill this form below.</DialogDescription>
@@ -123,7 +124,7 @@ export default function AddNewMemo() {
 									</FormItem>
 								)}
 							/>
-							<div className="flex md:space-x-5">
+							<div className="flex space-x-5">
 								<Button type="submit">Submit</Button>
 								<DialogClose asChild>
 									<Button type="button" variant="destructive">
