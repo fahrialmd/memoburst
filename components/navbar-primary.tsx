@@ -23,7 +23,7 @@ export default function NavbarPrimary() {
 				<h1 className="font-bold text-2xl">Memoburst</h1>
 			</div>
 			<div className="ml-auto  items-center space-x-4 md:flex hidden">
-				<AddNewMemo />
+				<AddNewMemo subject="" username="" content="" selection={false} />
 				<Input
 					type="search"
 					placeholder="Search..."

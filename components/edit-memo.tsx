@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -39,14 +38,14 @@ interface props {
 	subject: String;
 	username: String;
 	content: String;
-	selection: boolean;
+	id: any;
 }
 
-export default function AddNewMemo({
+export default function EditMemo({
 	subject = "",
 	username = "",
 	content = "",
-	selection,
+	id,
 }: props) {
 	const [open, setOpen] = useState(false);
 	const router = useRouter();
@@ -63,28 +62,28 @@ export default function AddNewMemo({
 
 	// 2. Define a submit handler.
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values);
 		try {
-			const res = await fetch("http://localhost:3000/api/topics", {
-				method: "POST",
-				headers: { "Content-type": "application/json" },
+			const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
+				method: "PUT",
+				headers: {
+					"Content-type": "application/json",
+				},
 				body: JSON.stringify({
-					username: values.username,
-					subject: values.subject,
-					content: values.content,
+					newSubject: values.subject,
+					newUsername: values.username,
+					newContent: values.content,
 				}),
 			});
+
 			if (res.ok) {
 				setOpen(false);
 				toast({
 					title: "Success",
-					description: "Your memo has been sent.",
+					description: "Your memo has been edited.",
 				});
 				router.refresh();
 			} else {
-				throw new Error("Failed to publish memo");
+				throw new Error("Failed to edit memo");
 			}
 		} catch (error) {
 			console.log(error);
@@ -95,23 +94,17 @@ export default function AddNewMemo({
 		<>
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogTrigger asChild>
-					{selection ? (
-						<Button
-							variant={"ghost"}
-							className="flex-grow rounded-none"
-							size={"sm"}
-						>
-							<FilePenLine className="h-1/2" />
-						</Button>
-					) : (
-						<Button variant="outline" className="text-primary">
-							Add Memo
-						</Button>
-					)}
+					<Button
+						variant={"ghost"}
+						className="flex-grow rounded-none"
+						size={"sm"}
+					>
+						<FilePenLine className="h-1/2" />
+					</Button>
 				</DialogTrigger>
 				<DialogContent className="rounded-lg max-w-[95%] sm:max-w-md">
 					<DialogHeader>
-						<DialogTitle>Add New Memo</DialogTitle>
+						<DialogTitle>Edit Memo</DialogTitle>
 						<DialogDescription>Fill this form below.</DialogDescription>
 					</DialogHeader>
 					<Form {...form}>

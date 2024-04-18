@@ -44,7 +44,7 @@ export default function NavbarSecondary() {
 								className="md:w-[100px] lg:w-[300px]"
 							/>
 							<div>
-								<AddNewMemo />
+								<AddNewMemo subject="" username="" content="" />
 							</div>
 							<ModeToggle />
 						</SheetDescription>
