@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/sheet";
 import { List } from "lucide-react";
 import Image from "next/image";
-import { Input } from "./ui/input";
 import AddNewMemo from "./add-new-memo";
 import { ModeToggle } from "./ui/theme-toggle";
+import SearchBar from "./search-bar";
 
 export default function NavbarSecondary() {
 	return (
@@ -38,13 +38,14 @@ export default function NavbarSecondary() {
 							</div>
 						</SheetTitle>
 						<SheetDescription className="space-y-5 pt-10 ">
-							<Input
-								type="search"
-								placeholder="Search..."
-								className="md:w-[100px] lg:w-[300px]"
-							/>
+							<SearchBar />
 							<div>
-								<AddNewMemo subject="" username="" content="" />
+								<AddNewMemo
+									subject=""
+									username=""
+									content=""
+									selection={false}
+								/>
 							</div>
 							<ModeToggle />
 						</SheetDescription>

@@ -39,6 +39,7 @@ interface props {
 	subject: String;
 	username: String;
 	content: String;
+	createdAt: Date;
 	id: any;
 }
 
@@ -46,9 +47,16 @@ const formSchema = z.object({
 	confirmation: z.string(),
 });
 
-export default function Memo({ subject, username, content, id }: props) {
+export default function Memo({
+	subject,
+	username,
+	content,
+	createdAt,
+	id,
+}: props) {
 	const [open, setOpen] = useState(false);
 	const router = useRouter();
+	const createdDate = new Date(createdAt);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -56,6 +64,37 @@ export default function Memo({ subject, username, content, id }: props) {
 			confirmation: "",
 		},
 	});
+
+	const formatLocalizedDate = (date: Date): string => {
+		const months = [
+			"Jan",
+			"Feb",
+			"Mar",
+			"Apr",
+			"May",
+			"Jun",
+			"Jul",
+			"Aug",
+			"Sep",
+			"Oct",
+			"Nov",
+			"Dec",
+		];
+
+		const formattedDate = `${date.getDate()} ${
+			months[date.getMonth()]
+		} ${date.getFullYear()} · ${formatTime(date)}`;
+		return formattedDate;
+	};
+
+	const formatTime = (date: Date): string => {
+		return `${padZero(date.getHours())}:${padZero(date.getMinutes())}`;
+	};
+
+	// Function to pad zero for single digit numbers (e.g., 9 -> "09")
+	const padZero = (num: number): string => {
+		return num < 10 ? `0${num}` : `${num}`;
+	};
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		if (values.confirmation == subject) {
@@ -65,10 +104,18 @@ export default function Memo({ subject, username, content, id }: props) {
 			if (res.ok) {
 				setOpen(false);
 				toast({
+					variant: "confirmed",
 					title: "Success",
 					description: "Your memo has been deleted.",
 				});
 				router.refresh();
+			} else {
+				toast({
+					variant: "destructive",
+					title: "Failed",
+					description: "Failed to delete memo. Try Again Later.",
+				});
+				throw new Error("Failed to delete memo");
 			}
 		} else {
 			toast({
@@ -81,14 +128,19 @@ export default function Memo({ subject, username, content, id }: props) {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>{subject}</CardTitle>
+				<CardTitle>
+					<p className="truncate text-xl">{subject}</p>
+				</CardTitle>
 				<CardDescription>{username}</CardDescription>
 			</CardHeader>
-			<CardContent>
+			<CardContent className="space-y-5">
 				<p className="truncate ">{content}</p>
-			</CardContent>
+				<p className="text-sm text-muted-foreground">
+					{formatLocalizedDate(createdDate)}
+				</p>
+			</CardContent>{" "}
 			<Separator />
-			<CardFooter className="p-0 justify-center ">
+			<CardFooter className="p-0 justify-center h-[36px]">
 				<Dialog>
 					<DialogTrigger asChild>
 						<Button
@@ -105,6 +157,9 @@ export default function Memo({ subject, username, content, id }: props) {
 							<DialogDescription>By: {username}</DialogDescription>
 						</DialogHeader>
 						{content}
+						<p className="text-sm text-muted-foreground">
+							{formatLocalizedDate(createdDate)}
+						</p>
 					</DialogContent>
 				</Dialog>
 				<EditMemo

@@ -1,9 +1,9 @@
 import React from "react";
 import { ModeToggle } from "./ui/theme-toggle";
 import Image from "next/image";
-import { Input } from "./ui/input";
 import AddNewMemo from "./add-new-memo";
 import NavbarSecondary from "./navbar-secondary";
+import SearchBar from "./search-bar";
 
 export default function NavbarPrimary() {
 	return (
@@ -24,11 +24,7 @@ export default function NavbarPrimary() {
 			</div>
 			<div className="ml-auto  items-center space-x-4 md:flex hidden">
 				<AddNewMemo subject="" username="" content="" selection={false} />
-				<Input
-					type="search"
-					placeholder="Search..."
-					className="md:w-[200px] lg:w-[300px]"
-				/>
+				<SearchBar />
 				<ModeToggle />
 			</div>
 		</main>

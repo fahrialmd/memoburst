@@ -79,11 +79,17 @@ export default function AddNewMemo({
 			if (res.ok) {
 				setOpen(false);
 				toast({
+					variant: "confirmed",
 					title: "Success",
 					description: "Your memo has been sent.",
 				});
 				router.refresh();
 			} else {
+				toast({
+					variant: "destructive",
+					title: "Failed",
+					description: "Failed to publish memo. Try Again Later.",
+				});
 				throw new Error("Failed to publish memo");
 			}
 		} catch (error) {
