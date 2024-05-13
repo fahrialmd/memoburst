@@ -63,7 +63,6 @@ export default function AddNewMemo({
 
 	// 2. Define a submit handler.
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
 		try {
 			const res = await fetch("http://localhost:3000/api/topics", {
 				method: "POST",
@@ -81,7 +80,6 @@ export default function AddNewMemo({
 					title: "Success",
 					description: "Your memo has been sent.",
 				});
-				router.refresh();
 			} else {
 				toast({
 					variant: "destructive",

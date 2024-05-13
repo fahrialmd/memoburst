@@ -46,7 +46,6 @@ export default function MemoList() {
 			const { topics } = await getTopics();
 			setTopics(topics);
 		};
-
 		fetchTopics();
 	}, []);
 

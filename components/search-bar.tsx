@@ -15,12 +15,14 @@ import {
 	FormItem,
 	FormMessage,
 } from "@/components/ui/form";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
 	context: z.string().min(1, "Required"),
 });
 
 function SearchBar() {
+	const router = useRouter();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -29,7 +31,8 @@ function SearchBar() {
 	});
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
+		const route = `/search/${values.context}`;
+		router.push(route);
 	}
 	return (
 		<Form {...form}>
@@ -39,7 +42,6 @@ function SearchBar() {
 					name="context"
 					render={({ field }) => (
 						<FormItem>
-							{/* <FormLabel>Context</FormLabel> */}
 							<FormControl>
 								<Input placeholder="Search..." {...field} />
 							</FormControl>
