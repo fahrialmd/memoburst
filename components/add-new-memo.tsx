@@ -63,8 +63,6 @@ export default function AddNewMemo({
 
 	// 2. Define a submit handler.
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
 		console.log(values);
 		try {
 			const res = await fetch("http://localhost:3000/api/topics", {

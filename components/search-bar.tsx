@@ -46,8 +46,8 @@ function SearchBar() {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit" className="p-2">
-					<Search className="" />
+				<Button variant="outline" type="submit" className="p-2">
+					<Search className="w-5" />
 				</Button>
 			</form>
 		</Form>
