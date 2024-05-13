@@ -44,6 +44,11 @@ export default function MemoList() {
 	useEffect(() => {
 		const fetchTopics = async () => {
 			const { topics } = await getTopics();
+			topics.sort((a: any, b: any) => {
+				const dateA = new Date(a.createdAt);
+				const dateB = new Date(b.createdAt);
+				return dateB.getTime() - dateA.getTime();
+			});
 			setTopics(topics);
 		};
 		fetchTopics();
