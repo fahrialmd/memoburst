@@ -2,7 +2,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Memo from "./memo";
-import OrderMenu from "./order-menu";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -13,7 +12,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LoaderCircle, RefreshCcw } from "lucide-react";
 
 export const getTopics = async () => {
 	try {
@@ -33,6 +32,7 @@ export const getTopics = async () => {
 export default function MemoList() {
 	const [topics, setTopics] = useState([]);
 	const [order, setOrder] = useState("latest");
+	const [loading, setLoading] = useState(true);
 
 	const orderTranslate: Record<string, string> = {
 		latest: "Latest",
@@ -41,18 +41,31 @@ export default function MemoList() {
 		descend: "Z-A",
 	};
 
+	const fetchTopics = async () => {
+		// Create a promise with a delay of 500ms
+		const delay = () => new Promise((resolve) => setTimeout(resolve, 700));
+
+		await delay(); // Wait for 500ms before fetching topics
+
+		const { topics } = await getTopics();
+		topics.sort((a: any, b: any) => {
+			const dateA = new Date(a.createdAt);
+			const dateB = new Date(b.createdAt);
+			return dateB.getTime() - dateA.getTime();
+		});
+		setTopics(topics);
+		setLoading(false);
+	};
+
 	useEffect(() => {
-		const fetchTopics = async () => {
-			const { topics } = await getTopics();
-			topics.sort((a: any, b: any) => {
-				const dateA = new Date(a.createdAt);
-				const dateB = new Date(b.createdAt);
-				return dateB.getTime() - dateA.getTime();
-			});
-			setTopics(topics);
-		};
 		fetchTopics();
-	}, []);
+	}, []); // Empty dependency array ensures the effect runs only once on mount
+
+	const handleFetchTopics = async () => {
+		setLoading(true);
+		setTopics([]);
+		await fetchTopics(); // Wait for topics to be fetched when the button is clicked
+	};
 
 	useEffect(() => {
 		const sortedTopics = [...topics]; // Create a copy of topics array
@@ -75,27 +88,36 @@ export default function MemoList() {
 
 	return (
 		<main className="space-y-5">
-			<DropdownMenu>
-				<DropdownMenuTrigger asChild className="w-[100px]">
-					<Button
-						variant="outline"
-						className="flex items-center justify-between"
-					>
-						<p>{orderTranslate[order]}&emsp;</p>
-						<ChevronDown className="w-4" />
-					</Button>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent className="w-56" align="start">
-					<DropdownMenuLabel>Order by</DropdownMenuLabel>
-					<DropdownMenuSeparator />
-					<DropdownMenuRadioGroup value={order} onValueChange={setOrder}>
-						<DropdownMenuRadioItem value="latest">Latest</DropdownMenuRadioItem>
-						<DropdownMenuRadioItem value="oldest">Oldest</DropdownMenuRadioItem>
-						<DropdownMenuRadioItem value="ascend">A-Z</DropdownMenuRadioItem>
-						<DropdownMenuRadioItem value="descend">Z-A</DropdownMenuRadioItem>
-					</DropdownMenuRadioGroup>
-				</DropdownMenuContent>
-			</DropdownMenu>
+			<div className="flex space-x-5">
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild className="w-[100px]">
+						<Button
+							variant="outline"
+							className="flex items-center justify-between"
+						>
+							<p>{orderTranslate[order]}&emsp;</p>
+							<ChevronDown className="w-4" />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent className="w-56" align="start">
+						<DropdownMenuLabel>Order by</DropdownMenuLabel>
+						<DropdownMenuSeparator />
+						<DropdownMenuRadioGroup value={order} onValueChange={setOrder}>
+							<DropdownMenuRadioItem value="latest">
+								Latest
+							</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value="oldest">
+								Oldest
+							</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value="ascend">A-Z</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value="descend">Z-A</DropdownMenuRadioItem>
+						</DropdownMenuRadioGroup>
+					</DropdownMenuContent>
+				</DropdownMenu>
+				<Button variant="outline" onClick={handleFetchTopics}>
+					{loading ? <RefreshCcw className="animate-spin" /> : <RefreshCcw />}
+				</Button>
+			</div>
 			<div className="md:grid md:grid-cols-3 md:gap-5  md:space-y-0 space-y-[32px]">
 				{topics.map(
 					(m: {
