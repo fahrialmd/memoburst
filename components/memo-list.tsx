@@ -43,9 +43,8 @@ export default function MemoList() {
 
 	const fetchTopics = async () => {
 		// Create a promise with a delay of 500ms
-		const delay = () => new Promise((resolve) => setTimeout(resolve, 700));
-
-		await delay(); // Wait for 500ms before fetching topics
+		// const delay = () => new Promise((resolve) => setTimeout(resolve, 700));\
+		// await delay(); // Wait for 500ms before fetching topics
 
 		const { topics } = await getTopics();
 		topics.sort((a: any, b: any) => {
