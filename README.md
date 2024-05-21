@@ -6,7 +6,7 @@ MemoBurst is a powerful internal communication tool designed to streamline the s
 
 - Features
 - Installation
-- Frameworks and Libraries
+- Frameworks, Libraries and Dependencies
 - Demo
 
 ## Features
