@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project Name
 
-## Getting Started
+MemoBurst is a powerful internal communication tool designed to streamline the sharing of notes, announcements, and reminders within a company or organization. Built using Next.js 14, MemoBurst leverages the latest features of this robust React framework to ensure high performance and scalability. The application integrates with MongoDB Atlas, providing a reliable and secure database solution for storing and managing all company communications. With MemoBurst, organizations can enhance their internal collaboration and ensure that important information is easily accessible and well-organized.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Features
+- Installation
+- Contributing
+- Demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Note Sharing: Easily create and share detailed notes with team members.
+- Responsive Design: Fully responsive interface for optimal use on desktops, tablets, and mobile devices.
+- Search Functionality: Powerful search tool to quickly find specific notes or announcements.
+- User-friendly Interface: Intuitive and easy-to-navigate design for a seamless user experience.
+- Real-time Updates: Instant updates and notifications for new notes, announcements, and reminders.
+- Sorting Options: Sort notes and announcements by latest, oldest, ascending, and descending order for easy organization and access.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+1. Clone this repository.
+2. Install dependencies using `npm install`.
+3. Run the development server with `npm run dev`.
 
-To learn more about Next.js, take a look at the following resources:
+## Demo
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Main Page (Desktop Version)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   <img src="public/ss_main_d.png" alt="Main Page (Desktop Version)">
 
-## Deploy on Vercel
+2. Main Page (Mobile Version)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   <img src="public/ss_main_m.png" alt="Main Page (Mobile Version)" width="300">
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+3. Add New Notes
