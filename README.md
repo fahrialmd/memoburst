@@ -6,7 +6,7 @@ MemoBurst is a powerful internal communication tool designed to streamline the s
 
 - Features
 - Installation
-- Contributing
+- Frameworks and Libraries
 - Demo
 
 ## Features
@@ -24,6 +24,17 @@ MemoBurst is a powerful internal communication tool designed to streamline the s
 2. Install dependencies using `npm install`.
 3. Run the development server with `npm run dev`.
 
+## Frameworks, Libraries and Dependencies
+
+- Next 14
+- Tailwind CSS
+- Shadcn
+- Zod
+- Typescript
+- React Hook Form
+- Mongodb
+- Dotenv
+
 ## Demo
 
 1. Main Page (Desktop Version)
@@ -33,5 +44,3 @@ MemoBurst is a powerful internal communication tool designed to streamline the s
 2. Main Page (Mobile Version)
 
    <img src="public/ss_main_m.png" alt="Main Page (Mobile Version)" width="300">
-
-3. Add New Notes
