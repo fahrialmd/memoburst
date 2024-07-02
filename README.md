@@ -1,6 +1,6 @@
 # Project Name
 
-MemoBurst is a powerful internal communication tool designed to streamline the sharing of notes, announcements, and reminders within a company or organization. Built using Next.js 14, MemoBurst leverages the latest features of this robust React framework to ensure high performance and scalability. The application integrates with MongoDB Atlas, providing a reliable and secure database solution for storing and managing all company communications. With MemoBurst, organizations can enhance their internal collaboration and ensure that important information is easily accessible and well-organized.
+MemoBurst is a powerful internal communication tool designed to streamline the sharing of notes, announcements, and reminders within a company or organization. Built using Next.js 14, MemoBurst leverages the latest features of this robust React framework to ensure high performance and scalability. The application integrates with MongoDB Atlas, providing a reliable and secure database solution for storing and managing all company communications. With MemoBurst, organizations can enhance their internal collaboration and ensure that important information is easily accessible and well-organized.@
 
 ## Table of Contents
 
