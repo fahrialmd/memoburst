@@ -1,0 +1,33 @@
+image: node:20
+
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install
+
+build:
+  stage: build
+  script:
+    - npm run build
+  after_script:
+    - echo "Build done"
+  tags:
+    - dev-fahri2
+
+deploy:
+  stage: deploy
+  script:
+    - docker build -t my-nextjs-app .
+    - docker run -d -p 3000:3000 my-nextjs-app
+  after_script:
+    - echo "Deploy done"
+  only:
+    - master # Deploy only when changes are pushed to the master branch
+  tags:
+    - dev-fahri2
