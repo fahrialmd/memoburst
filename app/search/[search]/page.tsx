@@ -1,7 +1,9 @@
+// app/search/[search]/page.tsx
+
 import Memo from "@/components/memo";
 import React from "react";
 
-interface props {
+interface Props {
 	params: any;
 }
 
@@ -13,7 +15,7 @@ interface Topic {
 	_id: React.Key | null | undefined;
 }
 
-export const getTopics = async () => {
+const getTopics = async () => {
 	try {
 		const res = await fetch("http://localhost:3000/api/topics/", {
 			cache: "no-store",
@@ -28,8 +30,16 @@ export const getTopics = async () => {
 	}
 };
 
-export default async function DetailsPage({ params }: props) {
-	const { topics } = await getTopics();
+const DetailsPage = async ({ params }: Props) => {
+	const topics = await getTopics();
+
+	if (!topics) {
+		return (
+			<main className="container py-[32px]">
+				<p className="text-center">Failed to load topics.</p>
+			</main>
+		);
+	}
 
 	topics.sort((a: any, b: any) => {
 		const dateA = new Date(a.createdAt);
@@ -42,7 +52,7 @@ export default async function DetailsPage({ params }: props) {
 	);
 
 	return (
-		<main className="container py-[32px] ">
+		<main className="container py-[32px]">
 			<div className="md:grid md:grid-cols-3 md:gap-5 md:space-y-0 space-y-[32px]">
 				{filteredTopics.map((topic: Topic) => (
 					<Memo
@@ -60,4 +70,6 @@ export default async function DetailsPage({ params }: props) {
 			) : null}
 		</main>
 	);
-}
+};
+
+export default DetailsPage;

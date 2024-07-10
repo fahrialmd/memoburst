@@ -26,6 +26,7 @@ export const getTopics = async () => {
 		}
 	} catch (error) {
 		console.log("Error loading topics");
+		return { topics: [] };
 	}
 };
 
