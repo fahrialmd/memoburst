@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - nextnet
+
+  nextapp:
+    container_name: nextapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongodb
+    networks:
+      - nextnet
+
+volumes:
+  mongodata:
+
+networks:
+  nextnet:
+    driver: bridge
