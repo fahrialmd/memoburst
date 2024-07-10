@@ -1,33 +1,26 @@
-image: node:20
-
 stages:
-  - build
-  - deploy
+  - build-deploy
 
-cache:
-  paths:
-    - node_modules/
+services:
+  - docker:dind
 
 before_script:
-  - npm install
+  - apt-get update
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
 
-build:
-  stage: build
+build-deploy:
+  stage: build-deploy
+  when: manual
   script:
-    - npm run build
-  after_script:
-    - echo "Build done"
+    - echo "${ENV}" > .env
+    - docker compose up
+    # - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
+    # - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    # - docker stop my_laravel_app || true
+    # - docker rm my_laravel_app || true
+    # - docker run -d --name my_laravel_app -p 1112:80 $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   tags:
-    - dev-fahri2
-
-deploy:
-  stage: deploy
-  script:
-    - docker build -t my-nextjs-app .
-    - docker run -d -p 3000:3000 my-nextjs-app
+    - devfh
   after_script:
-    - echo "Deploy done"
-  only:
-    - master # Deploy only when changes are pushed to the master branch
-  tags:
-    - dev-fahri2
+    - echo "Deploy Done"
+  allow_failure: false
