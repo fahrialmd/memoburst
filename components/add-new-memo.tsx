@@ -64,7 +64,7 @@ export default function AddNewMemo({
 	// 2. Define a submit handler.
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
-			const res = await fetch("http://localhost:3000/api/topics", {
+			const res = await fetch("/api/topics", {
 				method: "POST",
 				headers: { "Content-type": "application/json" },
 				body: JSON.stringify({

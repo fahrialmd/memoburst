@@ -63,7 +63,7 @@ export default function EditMemo({
 	// 2. Define a submit handler.
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
-			const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
+			const res = await fetch(`/api/topics/${id}`, {
 				method: "PUT",
 				headers: {
 					"Content-type": "application/json",
