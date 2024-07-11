@@ -5,7 +5,7 @@ services:
   - docker:dind
 
 before_script:
-  # - apt-get update
+  - wget https://gitlab.com/fahrialmd/memoburst/-/raw/main/docker-compose.yml?ref_type=heads -O docker-compose.yml
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
 
 build-deploy:
