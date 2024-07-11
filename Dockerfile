@@ -13,9 +13,6 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Write .env file
-RUN echo "${ENV}" > .env
-
 # Build the Next.js application
 RUN npm run build
 
@@ -26,6 +23,9 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package.json package-lock.json ./
+
+# Write .env file
+RUN echo "${ENV}" > .env
 
 # Install only production dependencies
 RUN npm install --only=production
