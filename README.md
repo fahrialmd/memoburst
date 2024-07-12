@@ -37,6 +37,9 @@ MemoBurst is a powerful internal communication tool designed to streamline the s
 
 ## Demo
 
+Link
+http://103.217.145.177:3000/
+
 1. Main Page (Desktop Version)
 
    <img src="public/ss_main_d.png" alt="Main Page (Desktop Version)">
