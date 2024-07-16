@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-async-client-component */
 // app/search/[search]/page.tsx
-
+"use client";
 import Memo from "@/components/memo";
 import React from "react";
 
@@ -15,23 +16,27 @@ interface Topic {
 	_id: React.Key | null | undefined;
 }
 
-const getTopics = async () => {
+export const getTopics = async (query: string) => {
 	try {
-		const res = await fetch("/api/topics/", {
+		const url = new URL(
+			`/api/topics${query ? `?query=${query}` : ""}`,
+			window.location.origin
+		);
+		const res = await fetch(url.toString(), {
 			cache: "no-store",
 		});
 		if (!res.ok) {
 			throw new Error("Failed to fetch topics");
-		} else {
-			return res.json();
 		}
+		return res.json();
 	} catch (error) {
-		console.log("Error loading topics");
+		console.log("Error loading topics", error);
+		return { topics: [] };
 	}
 };
 
 const DetailsPage = async ({ params }: Props) => {
-	const topics = await getTopics();
+	const { topics } = await getTopics(`${params.search}`);
 
 	if (!topics) {
 		return (
@@ -47,14 +52,10 @@ const DetailsPage = async ({ params }: Props) => {
 		return dateB.getTime() - dateA.getTime();
 	});
 
-	const filteredTopics = topics.filter((topic: Topic) =>
-		topic.subject.includes(params.search)
-	);
-
 	return (
 		<main className="container py-[32px]">
 			<div className="md:grid md:grid-cols-3 md:gap-5 md:space-y-0 space-y-[32px]">
-				{filteredTopics.map((topic: Topic) => (
+				{topics.map((topic: Topic) => (
 					<Memo
 						key={topic._id}
 						subject={topic.subject}
@@ -65,7 +66,7 @@ const DetailsPage = async ({ params }: Props) => {
 					/>
 				))}
 			</div>
-			{filteredTopics.length === 0 ? (
+			{topics.length === 0 ? (
 				<p className="text-center">Item not Found.</p>
 			) : null}
 		</main>

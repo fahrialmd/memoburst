@@ -11,6 +11,6 @@ const topicSchema = new Schema(
 	}
 );
 
-const Topic = mongoose.models.Topic || mongoose.model("memos", topicSchema);
+const Topic = mongoose.models.memos || mongoose.model("memos", topicSchema);
 
 export default Topic;

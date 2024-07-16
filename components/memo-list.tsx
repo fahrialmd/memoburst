@@ -14,18 +14,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown, LoaderCircle, RefreshCcw } from "lucide-react";
 
-export const getTopics = async () => {
+export const getTopics = async (query = "") => {
 	try {
-		const res = await fetch("/api/topics/", {
+		const url = new URL(
+			`/api/topics${query ? `?query=${query}` : ""}`,
+			window.location.origin
+		);
+		const res = await fetch(url.toString(), {
 			cache: "no-store",
 		});
 		if (!res.ok) {
 			throw new Error("Failed to fetch topics");
-		} else {
-			return res.json();
 		}
+		return res.json();
 	} catch (error) {
-		console.log("Error loading topics");
+		console.log("Error loading topics", error);
 		return { topics: [] };
 	}
 };
